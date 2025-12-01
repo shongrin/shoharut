@@ -1,131 +1,136 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="Google Sheet.css">
   <title>הזמנת ציוד בה"ד 7</title>
 </head>
 <body>
-  <div class="container">
-    <form method="post"
-          action="https://script.google.com/macros/s/AKfycbxTEINIbWjvY5af8J2TcTSpEa8JAMBMpGSGIsEB9Fg/dev"
-          name="contact-form">
+<div class="container">
+  <form method="post"
+        action="https://script.google.com/macros/s/AKfycbxTEINIbWjvY5af8J2TcTSpEa8JAMBMpGSGIsEB9Fg/dev"
+        name="contact-form">
 
-      <h4>הזמנת ציוד בה"ד 7</h4>
+    <h4>הזמנת ציוד בה"ד 7</h4>
 
-      <!-- School dropdown -->
-      <label for="school">בחר בית ספר:</label>
-      <select id="school" name="שם בית ספר">
-        <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
-        <option value="מרחבים" data-hidden="דרום">מרחבים</option>
-        <option value="אופקים" data-hidden="דרום">אופקים</option>
-        <option value="באר שבע" data-hidden="דרום">באר שבע</option>
-        <option value="תל אביב" data-hidden="מרכז">תל אביב</option>
-        <option value="הרצליה" data-hidden="מרכז">הרצליה</option>
-        <option value="רחובות" data-hidden="מרכז">רחובות</option>
-        <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
-      </select>
-      <input type="hidden" name="מחוז" id="school-region">
+    <!-- School dropdown -->
+    <label for="school">בחר בית ספר:</label>
+    <select id="school" name="שם בית ספר">
+      <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
+      <option value="מרחבים" data-hidden="דרום">מרחבים</option>
+      <option value="אופקים" data-hidden="דרום">אופקים</option>
+      <option value="באר שבע" data-hidden="דרום">באר שבע</option>
+      <option value="תל אביב" data-hidden="מרכז">תל אביב</option>
+      <option value="הרצליה" data-hidden="מרכז">הרצליה</option>
+      <option value="רחובות" data-hidden="מרכז">רחובות</option>
+      <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
+    </select>
+    <input type="hidden" name="מחוז" id="school-region">
 
-      <!-- Products container -->
-      <div id="products-container">
-        <div class="product-row">
-          <div class="product-header">מוצר חדש</div>
-          <div class="product-details">
-            <input type="text" name="מזון[]" placeholder="שם המזון">
-            <input type="text" name="כמות[]" placeholder="כמות">
-            <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
-            <div class="date-wrapper">
-              <input type="date" name="תאריך קבלה[]">
-            </div>
+    <!-- Products container -->
+    <div id="products-container">
+      <div class="product-row">
+        <div class="product-header">מוצר חדש</div>
+        <div class="product-details">
+          <input type="text" name="מזון[]" placeholder="שם המזון">
+          <input type="text" name="כמות[]" placeholder="כמות">
+          <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
+          <div class="date-wrapper">
+            <input type="date" name="תאריך קבלה[]">
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Add new product -->
-      <button type="button" id="add-product">מוצר נוסף</button>
-      <br><br>
+    <!-- Add new product -->
+    <button type="button" id="add-product">מוצר נוסף</button>
+    <br><br>
 
-      <!-- Submit button -->
-      <input type="submit" value="הזמן" id="submit">
+    <!-- Submit button -->
+    <input type="submit" value="הזמן" id="submit">
 
-    </form>
-  </div>
+  </form>
+</div>
 
-  <!-- Template for new products -->
-  <template id="product-template">
-    <div class="product-row">
-      <div class="product-header">מוצר חדש</div>
-      <div class="product-details">
-        <input type="text" name="מזון[]" placeholder="שם המזון">
-        <input type="text" name="כמות[]" placeholder="כמות">
-        <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
-        <div class="date-wrapper">
-          <input type="date" name="תאריך קבלה[]">
-        </div>
+<!-- Template for new products -->
+<template id="product-template">
+  <div class="product-row">
+    <div class="product-header">מוצר חדש</div>
+    <div class="product-details">
+      <input type="text" name="מזון[]" placeholder="שם המזון">
+      <input type="text" name="כמות[]" placeholder="כמות">
+      <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
+      <div class="date-wrapper">
+        <input type="date" name="תאריך קבלה[]">
       </div>
     </div>
-  </template>
+  </div>
+</template>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.querySelector('form[name="contact-form"]');
-      const select = document.getElementById('school');
-      const hidden = document.getElementById('school-region');
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector('form[name="contact-form"]');
+  const select = document.getElementById('school');
+  const hidden = document.getElementById('school-region');
+  const container = document.getElementById('products-container');
+  const addButton = document.getElementById('add-product');
+  const template = document.getElementById('product-template');
 
-      // Populate hidden region field on submit
-      form.addEventListener('submit', () => {
-        hidden.value = select.options[select.selectedIndex].dataset.hidden;
-      });
+  // Populate hidden region field on submit
+  form.addEventListener('submit', () => {
+    hidden.value = select.options[select.selectedIndex].dataset.hidden;
+  });
 
-      const container = document.getElementById('products-container');
-      const addButton = document.getElementById('add-product');
-      const template = document.getElementById('product-template');
+  // Toggle row open/collapse on header click
+  container.addEventListener('click', e => {
+    const header = e.target.closest('.product-header');
+    if (!header) return;
+    const row = header.closest('.product-row');
+    row.classList.toggle('collapsed');
+  });
 
-      // Toggle collapsed/open on header click
-      container.addEventListener('click', (e) => {
-        const header = e.target.closest('.product-header');
-        if (!header) return;
-        const row = header.closest('.product-row');
-        row.classList.toggle('collapsed');
-      });
+  // Setup a row: live update header from input
+  function setupRow(row) {
+    const header = row.querySelector('.product-header');
+    const input = row.querySelector('input[name="מזון[]"]');
+    if (!header || !input) return;
 
-      // Setup a row: live update header from input
-      function setupRow(row) {
-        const header = row.querySelector('.product-header');
-        const nameInput = row.querySelector('input[name="מזון[]"]');
-        if (!header || !nameInput) return;
-
-        // Update header text as user types
-        nameInput.addEventListener('input', () => {
-          header.textContent = nameInput.value.trim() || 'מוצר חדש';
-        });
-      }
-
-      // Initialize existing rows
-      container.querySelectorAll('.product-row').forEach(r => setupRow(r));
-
-      // Add new product button click
-      addButton.addEventListener('click', () => {
-        const rows = container.querySelectorAll('.product-row');
-        const lastRow = rows[rows.length - 1];
-
-        // Collapse last row and set header text from input
-        const input = lastRow.querySelector('input[name="מזון[]"]');
-        const header = lastRow.querySelector('.product-header');
-        if (input && header) header.textContent = input.value.trim() || 'מוצר חדש';
-        lastRow.classList.add('collapsed');
-
-        // Create new row from template
-        const newRow = template.content.cloneNode(true).querySelector('.product-row');
-        container.appendChild(newRow);
-        setupRow(newRow);
-
-        // Focus first input
-        const firstInput = newRow.querySelector('input[name="מזון[]"]');
-        if (firstInput) firstInput.focus();
-      });
+    // live update header as user types
+    input.addEventListener('input', () => {
+      header.textContent = input.value.trim() || 'מוצר חדש';
     });
-  </script>
+  }
+
+  // Initialize existing rows
+  container.querySelectorAll('.product-row').forEach(setupRow);
+
+  // Add new product
+  addButton.addEventListener('click', () => {
+    const rows = container.querySelectorAll('.product-row');
+    const lastRow = rows[rows.length - 1];
+
+    // Set header to input value before collapsing
+    const input = lastRow.querySelector('input[name="מזון[]"]');
+    const header = lastRow.querySelector('.product-header');
+    if (input && header) {
+      header.textContent = input.value.trim() || 'מוצר חדש';
+    }
+    lastRow.classList.add('collapsed');
+
+    // Clone template correctly
+    const cloneFragment = template.content.cloneNode(true);
+    const newRow = cloneFragment.querySelector('.product-row');
+    container.appendChild(newRow);
+
+    // Setup new row
+    setupRow(newRow);
+
+    // Focus first input of new row
+    const firstInput = newRow.querySelector('input[name="מזון[]"]');
+    if (firstInput) firstInput.focus();
+  });
+});
+</script>
 </body>
 </html>
