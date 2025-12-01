@@ -150,8 +150,22 @@ document.addEventListener("DOMContentLoaded", () => {
       body: params.toString()
     })
     .then(res => res.json())
-    .then(data => alert(data.message || "נשלח בהצלחה"))
-    .catch(err => console.error("Error:", err));
+    .then(data => {
+      // Show success page
+      document.body.innerHTML = `
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;">
+          <h1 style="color:blue; font-size:2rem;">Orders Submitted</h1>
+        </div>
+      `;
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      document.body.innerHTML = `
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;">
+          <h1 style="color:red; font-size:2rem;">Submission Failed</h1>
+        </div>
+      `;
+    });
   });
 });
 </script>
