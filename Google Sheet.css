@@ -16,7 +16,9 @@ body {
     padding: 5vw;
     background: #FFFFFF;
 }
-
+.school-select {
+    margin-bottom: 1rem;
+}
 /* CONTAINER */
 .container {
     width: 90%;
@@ -142,6 +144,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
