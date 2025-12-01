@@ -17,8 +17,10 @@ body {
     background: #FFFFFF;
 }
 .school-select {
-  margin-bottom: 20px; /* Adjust the space below the select */
+  display: block; /* ensure it’s block-level */
+  margin-bottom: 20px;
 }
+
 /* CONTAINER */
 .container {
     width: 90%;
@@ -144,6 +146,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
