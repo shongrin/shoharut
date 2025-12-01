@@ -1,3 +1,4 @@
+/* GENERAL RESET */
 * {
     box-sizing: border-box;
     padding: 0;
@@ -6,6 +7,7 @@
     font-size: 1rem;
 }
 
+/* BODY */
 body {
     min-height: 100vh;
     display: flex;
@@ -15,6 +17,7 @@ body {
     background: #FFFFFF;
 }
 
+/* CONTAINER */
 .container {
     width: 90%;
     max-width: 700px;
@@ -25,12 +28,20 @@ body {
     text-align: center;
 }
 
+/* HEADINGS */
 h4 {
     margin-bottom: 2rem;
     font-size: 1.5rem;
     color: black;
 }
 
+h5, h6 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.3rem;
+    color: white;
+}
+
+/* INPUT ROWS */
 .input-row {
     display: flex;
     flex-wrap: wrap;
@@ -43,18 +54,14 @@ h4 {
     min-width: 120px;
 }
 
-h5, h6 {
-    margin: 1rem 0 .5rem;
-    font-size: 1.3rem;
-    color: white;
-}
-
+/* ALL INPUTS */
 input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
 
+/* SUBMIT BUTTON */
 #submit {
     border: none;
     background-color: orangered;
@@ -72,7 +79,38 @@ input {
     background-color: #333333;
 }
 
-/* Responsive adjustments */
+/* PRODUCT ROWS */
+.product-row {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: #f0f8ff;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+/* PRODUCT HEADER BUTTON */
+.product-header {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #87cefa;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* HEADER HOVER EFFECT */
+.product-header:hover {
+    background-color: #00bfff;
+    color: white;
+}
+
+/* COLLAPSED PRODUCT DETAILS */
+.product-row.collapsed .product-details {
+    display: none;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
 @media (max-width: 500px) {
     h4 {
         font-size: 1.2rem;
@@ -89,27 +127,4 @@ input {
     .input-row input {
         min-width: 100%;
     }
-    .product-row {
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    background-color: #f0f8ff; /* light blue for product row */
-    padding: 10px;
-    transition: all 0.3s ease;
 }
-
-/* The clickable header that shows the food name */
-.product-header {
-    cursor: pointer;
-    font-weight: bold;
-    padding: 8px;
-    background-color: #87cefa; /* button-like color */
-    border-radius: 5px;
-    text-align: center;
-}
-
-/* Collapsed product: hide the details */
-.product-row.collapsed .product-details {
-    display: none;
-}
-}
-
