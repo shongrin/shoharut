@@ -3,6 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="Google Sheet.css">
+  <title>הזמנת ציוד בה"ד 7</title>
 </head>
 <body>
   <div class="container">
@@ -12,7 +13,7 @@
 
       <h4>הזמנת ציוד בה"ד 7</h4>
 
-      <!-- school controls unchanged -->
+      <!-- School dropdown -->
       <label for="school">בחר בית ספר:</label>
       <select id="school" name="שם בית ספר">
         <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
@@ -26,19 +27,7 @@
       </select>
       <input type="hidden" name="מחוז" id="school-region">
 
-      <!-- submit region hidden population -->
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          const form = document.querySelector('form[name="contact-form"]');
-          const select = document.getElementById('school');
-          const hidden = document.getElementById('school-region');
-          form.addEventListener('submit', () => {
-            hidden.value = select.options[select.selectedIndex].dataset.hidden;
-          });
-        });
-      </script>
-
-      <!-- Products container: initial visible product row (user will fill this) -->
+      <!-- Products container -->
       <div id="products-container">
         <div class="product-row">
           <div class="product-header">מוצר חדש</div>
@@ -53,13 +42,17 @@
         </div>
       </div>
 
+      <!-- Add new product -->
       <button type="button" id="add-product">מוצר נוסף</button>
       <br><br>
+
+      <!-- Submit button -->
       <input type="submit" value="הזמן" id="submit">
+
     </form>
   </div>
 
-  <!-- Blank template for new product rows (keeps template separate from filled rows) -->
+  <!-- Template for new products -->
   <template id="product-template">
     <div class="product-row">
       <div class="product-header">מוצר חדש</div>
@@ -74,81 +67,65 @@
     </div>
   </template>
 
-  <script src="Google Sheet.js"></script>
-
-  <!-- Collapsible + add-row logic -->
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById('products-container');
-    const addButton = document.getElementById('add-product');
-    const tpl = document.getElementById('product-template');
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.querySelector('form[name="contact-form"]');
+      const select = document.getElementById('school');
+      const hidden = document.getElementById('school-region');
 
-    // Delegate header clicks to toggle that row open/closed
-    container.addEventListener('click', (e) => {
-      const hdr = e.target.closest('.product-header');
-      if (!hdr) return;
-      const row = hdr.closest('.product-row');
-      row.classList.toggle('collapsed');
-    });
-
-    // Initialize a row: set header text & live-update while editing
-    function setupRow(row) {
-      const header = row.querySelector('.product-header');
-      const nameInput = row.querySelector('input[name="מזון[]"]');
-      if (!header || !nameInput) return;
-
-      // set header initial text from input (if any)
-      const initial = nameInput.value.trim();
-      header.textContent = initial || 'מוצר חדש';
-
-      // avoid double-attaching listeners
-      if (row.dataset.inited === '1') return;
-      row.dataset.inited = '1';
-
-      // live update header while user types
-      nameInput.addEventListener('input', () => {
-        header.textContent = nameInput.value.trim() || 'מוצר חדש';
-      });
-    }
-
-    // When add button pressed:
-    // - collapse currently visible rows (turn them into header-buttons)
-    // - create a NEW blank row from template and append it, expanded
-    addButton.addEventListener('click', () => {
-      // collapse currently expanded rows (those without .collapsed)
-      const rows = Array.from(container.querySelectorAll('.product-row'));
-      rows.forEach(r => {
-        // set header from its inputs before collapsing
-        const nameInput = r.querySelector('input[name="מזון[]"]');
-        const header = r.querySelector('.product-header');
-        if (nameInput && header) header.textContent = nameInput.value.trim() || 'מוצר חדש';
-        r.classList.add('collapsed');
+      // Populate hidden region field on submit
+      form.addEventListener('submit', () => {
+        hidden.value = select.options[select.selectedIndex].dataset.hidden;
       });
 
-      // create a fresh blank row from template (keeps filled values out of the new form)
-      const frag = tpl.content.cloneNode(true);
-      const newRow = frag.querySelector('.product-row');
-      if (!newRow) return;
+      const container = document.getElementById('products-container');
+      const addButton = document.getElementById('add-product');
+      const template = document.getElementById('product-template');
 
-      // ensure new row is expanded
-      newRow.classList.remove('collapsed');
+      // Toggle collapsed/open on header click
+      container.addEventListener('click', (e) => {
+        const header = e.target.closest('.product-header');
+        if (!header) return;
+        const row = header.closest('.product-row');
+        row.classList.toggle('collapsed');
+      });
 
-      // append and setup
-      container.appendChild(newRow);
-      setupRow(newRow);
+      // Setup a row: live update header from input
+      function setupRow(row) {
+        const header = row.querySelector('.product-header');
+        const nameInput = row.querySelector('input[name="מזון[]"]');
+        if (!header || !nameInput) return;
 
-      // focus first input in the new row for quick typing
-      const firstInput = newRow.querySelector('input[name="מזון[]"]');
-      if (firstInput) firstInput.focus();
+        // Update header text as user types
+        nameInput.addEventListener('input', () => {
+          header.textContent = nameInput.value.trim() || 'מוצר חדש';
+        });
+      }
+
+      // Initialize existing rows
+      container.querySelectorAll('.product-row').forEach(r => setupRow(r));
+
+      // Add new product button click
+      addButton.addEventListener('click', () => {
+        const rows = container.querySelectorAll('.product-row');
+        const lastRow = rows[rows.length - 1];
+
+        // Collapse last row and set header text from input
+        const input = lastRow.querySelector('input[name="מזון[]"]');
+        const header = lastRow.querySelector('.product-header');
+        if (input && header) header.textContent = input.value.trim() || 'מוצר חדש';
+        lastRow.classList.add('collapsed');
+
+        // Create new row from template
+        const newRow = template.content.cloneNode(true).querySelector('.product-row');
+        container.appendChild(newRow);
+        setupRow(newRow);
+
+        // Focus first input
+        const firstInput = newRow.querySelector('input[name="מזון[]"]');
+        if (firstInput) firstInput.focus();
+      });
     });
-
-    // initialize existing rows on page load (there is at least the original one)
-    document.querySelectorAll('.product-row').forEach(r => {
-      // start with the first row expanded (if you want it collapsed by default change this)
-      r.classList.remove('collapsed');
-      setupRow(r);
-    });
-  });
   </script>
 </body>
 </html>
