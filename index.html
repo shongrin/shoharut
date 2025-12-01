@@ -76,9 +76,15 @@
         const nameInput = row.querySelector('input[name="מזון[]"]');
 
         // Toggle details on click
-        header.addEventListener('click', () => {
-            details.style.display = (details.style.display === "none") ? "block" : "none";
-        });
+        header.onclick = function(){
+			if (header.style.display == 'block'){
+				header.style.display = 'none'
+			}
+			else {
+				header.style.display = 'block'
+			}
+			
+        }
 
         // Update header live as user types
         nameInput.addEventListener('input', () => {
@@ -128,3 +134,4 @@
     </script>
 </body>
 </html>
+
