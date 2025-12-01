@@ -30,7 +30,7 @@ body {
 
 /* HEADINGS */
 h4 {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     color: black;
 }
@@ -128,3 +128,4 @@ input {
         min-width: 100%;
     }
 }
+
