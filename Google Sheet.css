@@ -20,7 +20,7 @@ body {
   display: flex;
   align-items: center; /* keeps label and select vertically aligned */
   gap: 10px;           /* space between label and select */
-  margin-bottom: 20px; /* space below the row */
+  margin-bottom: 1rem; /* space below the row */
 }
 
 
@@ -149,6 +149,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
