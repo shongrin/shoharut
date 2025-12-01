@@ -110,6 +110,19 @@ input {
 .product-row.collapsed .product-details {
     display: none;
 }
+.submission-success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.submission-success h1 {
+  color: lightblue;  /* or use 'blue' if you prefer */
+  font-size: 3rem;
+  text-align: center;
+}
 
 /* RESPONSIVE ADJUSTMENTS */
 @media (max-width: 500px) {
@@ -129,5 +142,6 @@ input {
         min-width: 100%;
     }
 }
+
 
 
