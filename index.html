@@ -14,17 +14,19 @@
     <h4>הזמנת ציוד בה"ד 7</h4>
 
     <!-- School dropdown -->
-    <label for="school">בחר בית ספר:</label>
-    <select id="school" name="school" class="school-select">
-      <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
-      <option value="מרחבים" data-hidden="דרום">מרחבים</option>
-      <option value="אופקים" data-hidden="דרום">אופקים</option>
-      <option value="באר שבע" data-hidden="דרום">באר שבע</option>
-      <option value="תל אביב" data-hidden="מרכז">תל אביב</option>
-      <option value="הרצליה" data-hidden="מרכז">הרצליה</option>
-      <option value="רחובות" data-hidden="מרכז">רחובות</option>
-      <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
-    </select>
+    <div class="school-wrapper">
+      <label for="school">בחר בית ספר:</label>
+      <select id="school" name="school" class="school-select">
+        <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
+        <option value="מרחבים" data-hidden="דרום">מרחבים</option>
+        <option value="אופקים" data-hidden="דרום">אופקים</option>
+        <option value="באר שבע" data-hidden="דרום">באר שבע</option>
+        <option value="תל אביב" data-hidden="מרכז">תל אביב</option>
+        <option value="הרצליה" data-hidden="מרכז">הרצליה</option>
+        <option value="רחובות" data-hidden="מרכז">רחובות</option>
+        <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
+      </select>
+  </div>
     <input type="hidden" id="school-region" name="region">
 
     <!-- Products container -->
@@ -171,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
