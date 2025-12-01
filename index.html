@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Show success page
       document.body.innerHTML = `
         <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;">
-          <h1 style="color:blue; font-size:2rem;">Orders Submitted</h1>
+          <h1 style="color:light blue; font-size:3rem;">ההזמנה התבצעה בהצלחה!</h1>
         </div>
       `;
     })
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", err);
       document.body.innerHTML = `
         <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;">
-          <h1 style="color:red; font-size:2rem;">Submission Failed</h1>
+          <h1 style="color:light red; font-size:3rem;">הייתה תקלה</h1>
         </div>
       `;
     });
@@ -171,3 +171,4 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
