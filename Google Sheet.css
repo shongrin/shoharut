@@ -16,6 +16,12 @@ body {
     padding: 5vw;
     background: #FFFFFF;
 }
+.school-wrapper {
+  display: flex;
+  align-items: center; /* keeps label and select vertically aligned */
+  gap: 10px;           /* space between label and select */
+  margin-bottom: 20px; /* space below the row */
+}
 .school-select {
   display: block; /* ensure it’s block-level */
   margin-bottom: 20px;
@@ -146,6 +152,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
