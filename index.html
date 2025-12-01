@@ -8,15 +8,13 @@
 </head>
 <body>
 <div class="container">
-  <form method="post"
-        action="https://script.google.com/macros/s/AKfycbxTEINIbWjvY5af8J2TcTSpEa8JAMBMpGSGIsEB9Fg/dev"
-        name="contact-form">
+  <form id="product-form" name="contact-form">
 
     <h4>הזמנת ציוד בה"ד 7</h4>
 
     <!-- School dropdown -->
     <label for="school">בחר בית ספר:</label>
-    <select id="school" name="שם בית ספר">
+    <select id="school" name="school">
       <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
       <option value="מרחבים" data-hidden="דרום">מרחבים</option>
       <option value="אופקים" data-hidden="דרום">אופקים</option>
@@ -26,18 +24,18 @@
       <option value="רחובות" data-hidden="מרכז">רחובות</option>
       <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
     </select>
-    <input type="hidden" name="מחוז" id="school-region">
+    <input type="hidden" id="school-region" name="region">
 
     <!-- Products container -->
     <div id="products-container">
       <div class="product-row">
         <div class="product-header">מוצר חדש</div>
         <div class="product-details">
-          <input type="text" name="מזון[]" placeholder="שם המזון">
-          <input type="text" name="כמות[]" placeholder="כמות">
-          <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
+          <input type="text" name="name" placeholder="שם המזון">
+          <input type="text" name="amount" placeholder="כמות">
+          <input type="text" name="purpose" placeholder="לאיזה מטרה">
           <div class="date-wrapper">
-            <input type="date" name="תאריך קבלה[]">
+            <input type="date" name="date">
           </div>
         </div>
       </div>
@@ -48,7 +46,7 @@
     <br><br>
 
     <!-- Submit button -->
-    <input type="submit" value="הזמן" id="submit">
+    <button type="submit" id="submit">הזמן</button>
 
   </form>
 </div>
@@ -58,11 +56,11 @@
   <div class="product-row">
     <div class="product-header">מוצר חדש</div>
     <div class="product-details">
-      <input type="text" name="מזון[]" placeholder="שם המזון">
-      <input type="text" name="כמות[]" placeholder="כמות">
-      <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
+      <input type="text" name="name" placeholder="שם המזון">
+      <input type="text" name="amount" placeholder="כמות">
+      <input type="text" name="purpose" placeholder="לאיזה מטרה">
       <div class="date-wrapper">
-        <input type="date" name="תאריך קבלה[]">
+        <input type="date" name="date">
       </div>
     </div>
   </div>
@@ -70,19 +68,14 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector('form[name="contact-form"]');
-  const select = document.getElementById('school');
-  const hidden = document.getElementById('school-region');
+  const form = document.getElementById('product-form');
+  const schoolSelect = document.getElementById('school');
+  const regionInput = document.getElementById('school-region');
   const container = document.getElementById('products-container');
   const addButton = document.getElementById('add-product');
   const template = document.getElementById('product-template');
 
-  // Populate hidden region field on submit
-  form.addEventListener('submit', () => {
-    hidden.value = select.options[select.selectedIndex].dataset.hidden;
-  });
-
-  // Toggle row open/collapse on header click
+  // Collapse/expand product rows
   container.addEventListener('click', e => {
     const header = e.target.closest('.product-header');
     if (!header) return;
@@ -90,45 +83,71 @@ document.addEventListener("DOMContentLoaded", () => {
     row.classList.toggle('collapsed');
   });
 
-  // Setup a row: live update header from input
+  // Setup a row: live update header
   function setupRow(row) {
     const header = row.querySelector('.product-header');
-    const input = row.querySelector('input[name="מזון[]"]');
+    const input = row.querySelector('input[name="name"]');
     if (!header || !input) return;
 
-    // live update header as user types
     input.addEventListener('input', () => {
       header.textContent = input.value.trim() || 'מוצר חדש';
     });
   }
 
-  // Initialize existing rows
+  // Initialize first row
   container.querySelectorAll('.product-row').forEach(setupRow);
 
-  // Add new product
+  // Add new product row
   addButton.addEventListener('click', () => {
     const rows = container.querySelectorAll('.product-row');
     const lastRow = rows[rows.length - 1];
 
-    // Set header to input value before collapsing
-    const input = lastRow.querySelector('input[name="מזון[]"]');
+    // Collapse previous row and set header to food name
+    const input = lastRow.querySelector('input[name="name"]');
     const header = lastRow.querySelector('.product-header');
     if (input && header) {
       header.textContent = input.value.trim() || 'מוצר חדש';
     }
     lastRow.classList.add('collapsed');
 
-    // Clone template correctly
+    // Clone template
     const cloneFragment = template.content.cloneNode(true);
     const newRow = cloneFragment.querySelector('.product-row');
     container.appendChild(newRow);
-
-    // Setup new row
     setupRow(newRow);
 
-    // Focus first input of new row
-    const firstInput = newRow.querySelector('input[name="מזון[]"]');
+    // Focus on first input of new row
+    const firstInput = newRow.querySelector('input[name="name"]');
     if (firstInput) firstInput.focus();
+  });
+
+  // Handle form submission
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    regionInput.value = schoolSelect.selectedOptions[0].dataset.hidden;
+
+    // Collect all products
+    const rows = container.querySelectorAll('.product-row');
+    const products = [];
+    rows.forEach(row => {
+      const name = row.querySelector('input[name="name"]').value;
+      const amount = row.querySelector('input[name="amount"]').value;
+      const purpose = row.querySelector('input[name="purpose"]').value;
+      const date = row.querySelector('input[name="date"]').value;
+      products.push({ name, amount, purpose, date });
+    });
+
+    // Send to Google Apps Script as JSON
+    const formData = new FormData();
+    formData.append('school', schoolSelect.value);
+    formData.append('region', regionInput.value);
+    formData.append('products', JSON.stringify(products));
+
+    fetch(form.action, { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => alert(data.message || "נשלח בהצלחה"))
+      .catch(err => console.error(err));
   });
 });
 </script>
