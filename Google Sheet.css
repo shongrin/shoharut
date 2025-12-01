@@ -119,7 +119,7 @@ input {
 }
 
 .submission-success h1 {
-  color: lightblue;  /* or use 'blue' if you prefer */
+  color: blue;  /* or use 'blue' if you prefer */
   font-size: 3rem;
   text-align: center;
 }
@@ -142,6 +142,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
