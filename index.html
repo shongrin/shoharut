@@ -27,6 +27,7 @@
             <input type="hidden" name="מחוז" id="school-region">
 
             <script>
+            document.addEventListener("DOMContentLoaded", () => {
                 const form = document.querySelector('form[name="contact-form"]');
                 const select = document.getElementById('school');
                 const hidden = document.getElementById('school-region');
@@ -34,12 +35,13 @@
                 form.addEventListener('submit', function() {
                     hidden.value = select.options[select.selectedIndex].dataset.hidden;
                 });
+            });
             </script>
 
             <!-- Products container -->
             <div id="products-container">
                 <div class="input-row product-row">
-                    <div class="product-header" style="display:none; cursor:pointer; background:#eee; padding:5px;">
+                    <div class="product-header">
                         מוצר חדש
                     </div>
                     <div class="product-details">
@@ -47,7 +49,7 @@
                         <input type="text" name="כמות[]" placeholder="כמות">
                         <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
                         <div class="date-wrapper">
-                            <input type="date" name="תאריך קבלה[]" >
+                            <input type="date" name="תאריך קבלה[]">
                         </div>
                     </div>
                 </div>
@@ -59,79 +61,82 @@
 
             <!-- Submit button -->
             <input type="submit" value="הזמן" id="submit">
-
         </form>
     </div>
 
-    <script src="Google Sheet.js"></script>
+<script src="Google Sheet.js"></script>
 
-    <!-- JS for date placeholder, collapsible & live product name header -->
-    <script>
+<!-- Collapsible + add-row logic -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
     const container = document.getElementById('products-container');
     const addButton = document.getElementById('add-product');
-	
-    function setupCollapsible(row) {
+
+    // HEADER CLICK COLLAPSE USING CLASS
+    container.addEventListener('click', (e) => {
+        const header = e.target.closest('.product-header');
+        if (!header) return;
+        const row = header.closest('.product-row');
+        row.classList.toggle('collapsed');
+    });
+
+    // Setup row (header text + typing update)
+    function setupRow(row) {
         const header = row.querySelector('.product-header');
-        const details = row.querySelector('.product-details');
         const nameInput = row.querySelector('input[name="מזון[]"]');
 
-        // Toggle details on click
-        header.onclick = function(){
-			if (header.style.display == 'block'){
-				header.style.display = 'none'
-			}
-			else {
-				header.style.display = 'block'
-			}
-			
-        }
+        if (!header || !nameInput) return;
 
-        // Update header live as user types
-        nameInput.addEventListener('input', () => {
-            const value = nameInput.value.trim();
-            header.textContent = value ? value : 'מוצר חדש';
+        // Initial header
+        const initial = nameInput.value.trim();
+        header.textContent = initial || "מוצר חדש";
+
+        if (row.dataset.init === "1") return;
+        row.dataset.init = "1";
+
+        // Live header update
+        nameInput.addEventListener("input", () => {
+            const val = nameInput.value.trim();
+            header.textContent = val || "מוצר חדש";
         });
-
-        // Initialize header
-        header.textContent = nameInput.value.trim() ? nameInput.value.trim() : 'מוצר חדש';
     }
 
-    // Add product functionality
+    // Add new product
     addButton.addEventListener('click', () => {
-        const rows = container.querySelectorAll('.product-row');
+        const rows = [...container.querySelectorAll('.product-row')];
         const first = rows[0];
-        const firstHeader = first.querySelector('.product-header');
-        const firstDetails = first.querySelector('.product-details');
 
-        // Collapse first row if not collapsed
-        if(firstHeader.style.display === "none") {
-            firstHeader.style.display = "block";
-            firstDetails.style.display = "none";
-        }
+        // Collapse ALL existing rows
+        rows.forEach(r => r.classList.add('collapsed'));
 
-        // Clone first row
+        // Clone
         const newRow = first.cloneNode(true);
 
-        // Clear inputs
-        newRow.querySelectorAll('input').forEach(input => input.value = '');
-        newRow.querySelectorAll('.date-wrapper').forEach(wrapper => wrapper.classList.remove('has-value'));
+        // Reset inputs
+        newRow.querySelectorAll("input").forEach(i => i.value = "");
 
-        // Reset display
-        newRow.querySelector('.product-details').style.display = "block";
-        newRow.querySelector('.product-header').style.display = "block";
+        // Expand new row
+        newRow.classList.remove('collapsed');
+
+        // Reset header
+        newRow.querySelector(".product-header").textContent = "מוצר חדש";
 
         container.appendChild(newRow);
 
-        // Setup date & collapsible for new row
-        setupDate(newRow.querySelector('.date-wrapper'));
-        setupCollapsible(newRow);
+        // Setup logic for the new row
+        setupRow(newRow);
+
+        newRow.scrollIntoView({ behavior: "smooth", block: "center" });
     });
 
     // Initialize first row
-    const firstRow = container.querySelector('.product-row');
-    setupDate(firstRow.querySelector('.date-wrapper'));
-    setupCollapsible(firstRow);
-    </script>
+    const firstRow = container.querySelector(".product-row");
+    firstRow.classList.remove("collapsed");
+    setupRow(firstRow);
+
+});
+</script>
+
 </body>
 </html>
-
