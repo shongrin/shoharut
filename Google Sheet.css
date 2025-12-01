@@ -26,6 +26,7 @@ body {
     border-radius: 10px;
     background-color: #ADD8E6;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 /* HEADINGS */
@@ -128,4 +129,5 @@ input {
         min-width: 100%;
     }
 }
+
 
