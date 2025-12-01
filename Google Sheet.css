@@ -89,4 +89,27 @@ input {
     .input-row input {
         min-width: 100%;
     }
+    .product-row {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: #f0f8ff; /* light blue for product row */
+    padding: 10px;
+    transition: all 0.3s ease;
 }
+
+/* The clickable header that shows the food name */
+.product-header {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #87cefa; /* button-like color */
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Collapsed product: hide the details */
+.product-row.collapsed .product-details {
+    display: none;
+}
+}
+
