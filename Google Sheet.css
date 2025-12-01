@@ -18,10 +18,14 @@ body {
 }
 .school-wrapper {
   display: flex;
-  align-items: center; /* keeps label and select vertically aligned */
-  justify-content: center;
-  gap: 10px;           /* space between label and select */
-  margin-bottom: 1rem; /* space below the row */
+  align-items: center;        /* vertical alignment */
+  justify-content: center;    /* horizontal centering */
+  gap: 10px;                  /* space between label and select */
+  margin-bottom: 1rem;        /* space below */
+  width: 100%;                /* take full container width */
+}
+.school-wrapper label {
+  white-space: nowrap;        /* prevent label from wrapping */
 }
 
 
@@ -150,6 +154,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
