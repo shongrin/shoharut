@@ -22,10 +22,7 @@ body {
   gap: 10px;           /* space between label and select */
   margin-bottom: 20px; /* space below the row */
 }
-.school-select {
-  display: block; /* ensure it’s block-level */
-  margin-bottom: 20px;
-}
+
 
 /* CONTAINER */
 .container {
@@ -152,6 +149,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
