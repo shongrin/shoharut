@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Google Sheet.css">
+</head>
+<body>
+    <div class="container">
+        <form method="post" 
+              action="https://script.google.com/macros/s/AKfycbxTEINIbWjvY5af8J2TcTSpEa8JAMBMpGSGIsEB9Fg/dev" 
+              name="contact-form">
+
+            <h4>הזמנת ציוד בה"ד 7</h4>
+
+            <!-- School dropdown -->
+            <label for="school">בחר בית ספר:</label>
+            <select id="school" name="שם בית ספר">
+                <option value="גן יבנה" data-hidden="דרום">גן יבנה</option>
+                <option value="מרחבים" data-hidden="דרום">מרחבים</option>
+                <option value="אופקים" data-hidden="דרום">אופקים</option>
+                <option value="באר שבע" data-hidden="דרום">באר שבע</option>
+                <option value="תל אביב" data-hidden="מרכז">תל אביב</option>
+                <option value="הרצליה" data-hidden="מרכז">הרצליה</option>
+                <option value="רחובות" data-hidden="מרכז">רחובות</option>
+                <option value="קריית מוצקין" data-hidden="צפון">קריית מוצקין</option>
+            </select>
+            <input type="hidden" name="מחוז" id="school-region">
+
+            <script>
+                const form = document.querySelector('form[name="contact-form"]');
+                const select = document.getElementById('school');
+                const hidden = document.getElementById('school-region');
+
+                form.addEventListener('submit', function() {
+                    hidden.value = select.options[select.selectedIndex].dataset.hidden;
+                });
+            </script>
+
+            <!-- Products container -->
+            <div id="products-container">
+                <div class="input-row product-row">
+                    <div class="product-header" style="display:none; cursor:pointer; background:#eee; padding:5px;">
+                        מוצר חדש
+                    </div>
+                    <div class="product-details">
+                        <input type="text" name="מזון[]" placeholder="שם המזון">
+                        <input type="text" name="כמות[]" placeholder="כמות">
+                        <input type="text" name="מטרה[]" placeholder="לאיזה מטרה">
+                        <div class="date-wrapper">
+                            <input type="date" name="תאריך קבלה[]" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add another product button -->
+            <button type="button" id="add-product">מוצר נוסף</button>
+            <br><br>
+
+            <!-- Submit button -->
+            <input type="submit" value="הזמן" id="submit">
+
+        </form>
+    </div>
+
+    <script src="Google Sheet.js"></script>
+
+    <!-- JS for date placeholder, collapsible & live product name header -->
+    <script>
+    const container = document.getElementById('products-container');
+    const addButton = document.getElementById('add-product');
+	
+    function setupCollapsible(row) {
+        const header = row.querySelector('.product-header');
+        const details = row.querySelector('.product-details');
+        const nameInput = row.querySelector('input[name="מזון[]"]');
+
+        // Toggle details on click
+        header.addEventListener('click', () => {
+            details.style.display = (details.style.display === "none") ? "block" : "none";
+        });
+
+        // Update header live as user types
+        nameInput.addEventListener('input', () => {
+            const value = nameInput.value.trim();
+            header.textContent = value ? value : 'מוצר חדש';
+        });
+
+        // Initialize header
+        header.textContent = nameInput.value.trim() ? nameInput.value.trim() : 'מוצר חדש';
+    }
+
+    // Add product functionality
+    addButton.addEventListener('click', () => {
+        const rows = container.querySelectorAll('.product-row');
+        const first = rows[0];
+        const firstHeader = first.querySelector('.product-header');
+        const firstDetails = first.querySelector('.product-details');
+
+        // Collapse first row if not collapsed
+        if(firstHeader.style.display === "none") {
+            firstHeader.style.display = "block";
+            firstDetails.style.display = "none";
+        }
+
+        // Clone first row
+        const newRow = first.cloneNode(true);
+
+        // Clear inputs
+        newRow.querySelectorAll('input').forEach(input => input.value = '');
+        newRow.querySelectorAll('.date-wrapper').forEach(wrapper => wrapper.classList.remove('has-value'));
+
+        // Reset display
+        newRow.querySelector('.product-details').style.display = "block";
+        newRow.querySelector('.product-header').style.display = "block";
+
+        container.appendChild(newRow);
+
+        // Setup date & collapsible for new row
+        setupDate(newRow.querySelector('.date-wrapper'));
+        setupCollapsible(newRow);
+    });
+
+    // Initialize first row
+    const firstRow = container.querySelector('.product-row');
+    setupDate(firstRow.querySelector('.date-wrapper'));
+    setupCollapsible(firstRow);
+    </script>
+</body>
+</html>
