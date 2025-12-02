@@ -15,6 +15,12 @@ body {
     justify-content: center;
     padding: 5vw;
     background-image: url('12.png');
+    background-repeat: no-repeat; /* Prevents image from repeating */
+    background-position: center center; /* Centers the image */
+    background-size: cover; /* Ensures the image covers the entire container */
+    /* Optional: Set a minimum height for the container if it's not the body */
+    min-height: 100vh; /* Makes the container at least the height of the viewport */
+    width: 100%;
 }
 .school-wrapper {
   display: flex;
@@ -154,6 +160,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
