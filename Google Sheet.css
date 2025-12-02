@@ -91,7 +91,7 @@ input {
     cursor: pointer;
     display: block;
 }
-#add-producy:hover {
+#add-product:hover {
     background-color: #333333;
 }
 
@@ -175,6 +175,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
