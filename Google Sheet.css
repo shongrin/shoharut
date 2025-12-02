@@ -79,6 +79,21 @@ input {
     padding: 10px;
     margin-bottom: 10px;
 }
+#add-product {
+    border: none;
+    background-color: blue;
+    color: white;
+    width: 60%;
+    max-width: 200px;
+    padding: 10px;
+    margin: 15px auto 0;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+}
+#add-producy:hover {
+    background-color: #333333;
+}
 
 /* SUBMIT BUTTON */
 #submit {
@@ -160,6 +175,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
