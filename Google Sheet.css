@@ -81,7 +81,7 @@ input {
 }
 #add-product {
     border: none;
-    background-color: blue;
+    background-color: #9DBEBF;
     color: white;
     width: 60%;
     max-width: 200px;
@@ -98,7 +98,7 @@ input {
 /* SUBMIT BUTTON */
 #submit {
     border: none;
-    background-color: orangered;
+    background-color: #1469D9;
     color: white;
     width: 60%;
     max-width: 200px;
@@ -175,6 +175,7 @@ input {
         min-width: 100%;
     }
 }
+
 
 
 
